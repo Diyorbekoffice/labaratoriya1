@@ -11,16 +11,16 @@ $(document).ready(function () {
   });
 
   $('.portfolio .button-container .btn').click(function () {
+    const filter = $(this).data('filter'); 
 
-    let filter = $(this).attr('data-filter');
-
-    if (filter == 'all') {
-      $('.portfolio .image-container .box').show('400')
+    const boxes = $('.portfolio .image-container .box');
+    
+    if (filter === 'all') {
+      boxes.show(400);
     } else {
-      $('.portfolio .image-container .box').not('.' + filter).hide('200');
-      $('.portfolio .image-container .box').filter('.' + filter).show('400');
+      boxes.not('.' + filter).hide(200);
+      boxes.filter('.' + filter).show(400);
     }
-
   });
 
   $('#theme-toggler').click(function () {
@@ -28,30 +28,22 @@ $(document).ready(function () {
     $('body').toggleClass('dark-theme');
   });
 
-  // smooth scrolling 
-
-  $('a[href*="#"]').on('click', function (e) {
-
+  $('a[href*="#"]').click(function (e) {
     e.preventDefault();
 
+    const target = $($(this).attr('href')); 
     $('html, body').animate({
-
-      scrollTop: $($(this).attr('href')).offset().top,
-
-    },
-      500,
-      'linear'
-    );
-
+      scrollTop: target.offset().top
+    }, 500, 'linear');
   });
 
 });
-// When the user scrolls the page, execute myFunction 
-window.onscroll = function() {myFunction()};
 
-function myFunction() {
-  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  var scrolled = (winScroll / height) * 100;
-  document.getElementById("myBar").style.width = scrolled + "%";
+window.onscroll = function() {updateScrollProgress()};
+
+function updateScrollProgress() {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = `${scrolled}%`; 
 }
